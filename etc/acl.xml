@@ -1,0 +1,12 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="M2E_Shein::shein" title="Shein Integration" sortOrder="31">
+                    <resource id="M2E_Shein::dashboard" title="Dashboard" sortOrder="10" />
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

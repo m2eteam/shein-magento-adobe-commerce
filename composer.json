@@ -1,0 +1,30 @@
+{
+    "name" : "m2e/shein-magento-adobe-commerce",
+    "description" : "Start selling on Shein with M2E Shein Connect. This native Adobe Commerce extension lets you add and categorize Magento products on Shein while efficiently managing orders and inventory",
+    "type" : "magento2-module",
+    "version" : "1.0.0",
+    "license" : "proprietary",
+    "keywords" : [
+        "magento",
+        "shein magento",
+        "shein",
+        "m2e",
+        "shein connector",
+        "shein extension for magento 2",
+        "selling on shein",
+        "sell on shein"
+    ],
+    "homepage" : "https://m2epro.com/magento-shein-marketplace-integration",
+    "require" : {
+        "php" : ">=7.4",
+        "m2e/m2ecloud-magento-adobe-commerce-connector": "^1"
+    },
+    "autoload" : {
+        "files" : [
+            "registration.php"
+        ],
+        "psr-4" : {
+            "M2E\\Shein\\" : ""
+        }
+    }
+}
