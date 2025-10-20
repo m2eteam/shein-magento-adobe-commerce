@@ -103,6 +103,10 @@ class CloudProcessor
 
     private function getAdminUrl(): string
     {
-        return $this->backendHelper->getUrl() . $this->backendHelper->getAreaFrontName() . '/';
+        $adminStore = $this->storeManager->getStore(\Magento\Store\Model\Store::ADMIN_CODE);
+
+        return $adminStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK, true)
+            . $this->backendHelper->getAreaFrontName()
+            . '/';
     }
 }
