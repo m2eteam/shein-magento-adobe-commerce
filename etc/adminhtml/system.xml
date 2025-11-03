@@ -9,6 +9,9 @@
                     <label>Installed</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="init_host" translate="label" type="text" sortOrder="10" showInDefault="0" showInWebsite="0" showInStore="0">
+                    <label>Init Host</label>
+                </field>
             </group>
         </section>
     </system>

@@ -10,6 +10,7 @@ class Module
     private const CLOUD_PATH_PATTERN = '?magento2_embedded=true&domain=%s&signature=%s';
 
     private const INSTALLED_FLAG_CONFIG_PATH = 'm2e/shein/installed';
+    private const INIT_HOST_CONFIG_PATH = 'm2e/shein/init_host';
 
     private \Magento\Framework\App\Config\ScopeConfigInterface $config;
     private \Magento\Framework\App\Config\Storage\WriterInterface $configWriter;
@@ -36,7 +37,7 @@ class Module
 
     public function isModuleConfigured(): bool
     {
-        return $this->config->isSetFlag(self::INSTALLED_FLAG_CONFIG_PATH);
+        return $this->isSameHost() && $this->config->isSetFlag(self::INSTALLED_FLAG_CONFIG_PATH);
     }
 
     public function activate(): void
@@ -79,10 +80,19 @@ class Module
     private function setModuleAsConfigured(): void
     {
         $this->configWriter->save(self::INSTALLED_FLAG_CONFIG_PATH, 1);
+        $this->configWriter->save(self::INIT_HOST_CONFIG_PATH, $this->moduleHelper->getDomain());
     }
 
     private function getIntegration(): \M2E\M2ECloudMagentoConnector\Model\Integration
     {
         return $this->integrationFactory->create();
+    }
+
+    private function isSameHost(): bool
+    {
+        $hostDomain = $this->moduleHelper->getDomain();
+        $initDomain = $this->config->getValue(self::INIT_HOST_CONFIG_PATH);
+
+        return $hostDomain === $initDomain;
     }
 }
