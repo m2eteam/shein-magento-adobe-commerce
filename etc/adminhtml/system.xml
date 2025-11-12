@@ -2,8 +2,33 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <!-- base shein config -->
+        <tab id="m2e_cloud_shein" translate="label" sortOrder="460" class="m2e-tab-cloud-shein">
+            <label>M2E SHEIN CONNECT</label>
+        </tab>
+
+        <section id="m2e_shein" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Module</label>
+            <tab>m2e_cloud_shein</tab>
+            <resource>Magento_Config::config</resource>
+
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Shein Connector</label>
+
+                <field id="reset" translate="label" type="button" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Reset Connection</label>
+                    <frontend_model>M2E\Shein\Block\Adminhtml\System\Button</frontend_model>
+                </field>
+            </group>
+
+        </section>
+
         <section id="m2e">
+            <class>separator-top</class>
+            <label>Shein</label>
+            <tab>m2e_cloud</tab>
+            <resource>Magento_Config::config</resource>
+
             <group id="shein" translate="label" type="text" sortOrder="450" showInDefault="0" showInWebsite="0" showInStore="0">
                 <field id="installed" translate="label" type="select" sortOrder="10" showInDefault="0" showInWebsite="0" showInStore="0">
                     <label>Installed</label>

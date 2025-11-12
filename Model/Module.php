@@ -14,25 +14,25 @@ class Module
 
     private \Magento\Framework\App\Config\ScopeConfigInterface $config;
     private \Magento\Framework\App\Config\Storage\WriterInterface $configWriter;
-    private \M2E\M2ECloudMagentoConnector\Model\IntegrationFactory $integrationFactory;
     private CloudProcessor $cloudProcessor;
     private \Magento\Framework\App\CacheInterface $appCache;
     private \M2E\Shein\Helper\Module $moduleHelper;
+    private \M2E\M2ECloudMagentoConnector\Model\IntegrationService $integrationService;
 
     public function __construct(
         \Magento\Framework\App\Config\Storage\WriterInterface $configWriter,
         \Magento\Framework\App\Config\ScopeConfigInterface $config,
-        \M2E\M2ECloudMagentoConnector\Model\IntegrationFactory $integrationFactory,
+        \M2E\M2ECloudMagentoConnector\Model\IntegrationService $integrationService,
         \M2E\Shein\Model\CloudProcessor $salesChannelProcessor,
         \Magento\Framework\App\CacheInterface $appCache,
         \M2E\Shein\Helper\Module $moduleHelper
     ) {
         $this->config = $config;
         $this->configWriter = $configWriter;
-        $this->integrationFactory = $integrationFactory;
         $this->cloudProcessor = $salesChannelProcessor;
         $this->appCache = $appCache;
         $this->moduleHelper = $moduleHelper;
+        $this->integrationService = $integrationService;
     }
 
     public function isModuleConfigured(): bool
@@ -42,14 +42,14 @@ class Module
 
     public function activate(): void
     {
-        $integration = $this->getIntegration();
+        $integration = $this->integrationService->getIntegration();
         $integration->activate();
 
         $this->cloudProcessor->init();
 
         $this->setModuleAsConfigured();
 
-        $this->appCache->clean([\Magento\Backend\Block\Menu::CACHE_TAGS, 'CONFIG']);
+        $this->cleanConfigCache();
     }
 
     public function getM2eCloudUrl(): string
@@ -66,9 +66,16 @@ class Module
         return self::CLOUD_BASE_URL;
     }
 
+    public function resetActivation(): void
+    {
+        $this->configWriter->save(self::INSTALLED_FLAG_CONFIG_PATH, 0);
+        $this->configWriter->save(self::INIT_HOST_CONFIG_PATH, '');
+        $this->cleanConfigCache();
+    }
+
     private function getSignature(): string
     {
-        $integration = $this->getIntegration();
+        $integration = $this->integrationService->getIntegration();
 
         return hash_hmac(
             'sha256',
@@ -83,16 +90,16 @@ class Module
         $this->configWriter->save(self::INIT_HOST_CONFIG_PATH, $this->moduleHelper->getDomain());
     }
 
-    private function getIntegration(): \M2E\M2ECloudMagentoConnector\Model\Integration
-    {
-        return $this->integrationFactory->create();
-    }
-
     private function isSameHost(): bool
     {
         $hostDomain = $this->moduleHelper->getDomain();
         $initDomain = $this->config->getValue(self::INIT_HOST_CONFIG_PATH);
 
         return $hostDomain === $initDomain;
+    }
+
+    private function cleanConfigCache(): void
+    {
+        $this->appCache->clean([\Magento\Backend\Block\Menu::CACHE_TAGS, 'CONFIG']);
     }
 }

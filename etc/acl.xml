@@ -5,6 +5,7 @@
             <resource id="Magento_Backend::admin">
                 <resource id="M2E_Shein::shein" title="Shein Integration" sortOrder="31">
                     <resource id="M2E_Shein::dashboard" title="Dashboard" sortOrder="10" />
+                    <resource id="M2E_Shein::config" title="Configs" sortOrder="20" />
                 </resource>
             </resource>
         </resources>

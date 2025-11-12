@@ -12,28 +12,28 @@ class CloudProcessor
     private \Magento\Store\Model\StoreManagerInterface $storeManager;
     private \Magento\Backend\Helper\Data $backendHelper;
     private \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
-    private \M2E\M2ECloudMagentoConnector\Model\IntegrationFactory $integrationFactory;
     private \M2E\Shein\Helper\Module $moduleHelper;
+    private \M2E\M2ECloudMagentoConnector\Model\IntegrationService $integrationService;
 
     public function __construct(
         \M2E\Shein\Model\Connector\Client $httpClient,
         \Magento\Backend\Helper\Data $backendHelper,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \M2E\M2ECloudMagentoConnector\Model\IntegrationFactory $integrationFactory,
+        \M2E\M2ECloudMagentoConnector\Model\IntegrationService $integrationService,
         \M2E\Shein\Helper\Module $moduleHelper
     ) {
         $this->httpClient = $httpClient;
         $this->storeManager = $storeManager;
         $this->backendHelper = $backendHelper;
         $this->scopeConfig = $scopeConfig;
-        $this->integrationFactory = $integrationFactory;
         $this->moduleHelper = $moduleHelper;
+        $this->integrationService = $integrationService;
     }
 
     public function init(): void
     {
-        $integration = $this->integrationFactory->create();
+        $integration = $this->integrationService->getIntegration();
 
         $defaultStoreView = $this->storeManager->getDefaultStoreView();
 
