@@ -15,7 +15,11 @@
             <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Shein Connector</label>
 
-                <field id="reset" translate="label" type="button" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="version" translate="label" type="button" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Current version</label>
+                    <frontend_model>M2E\Shein\Block\Adminhtml\System\Version</frontend_model>
+                </field>
+                <field id="reset" translate="label" type="button" sortOrder="110" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Reset Connection</label>
                     <frontend_model>M2E\Shein\Block\Adminhtml\System\Button</frontend_model>
                 </field>
@@ -26,7 +30,7 @@
         <section id="m2e">
             <class>separator-top</class>
             <label>Shein</label>
-            <tab>m2e_cloud</tab>
+            <tab>m2e_cloud_shein</tab>
             <resource>Magento_Config::config</resource>
 
             <group id="shein" translate="label" type="text" sortOrder="450" showInDefault="0" showInWebsite="0" showInStore="0">
