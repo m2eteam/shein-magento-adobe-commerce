@@ -5,7 +5,7 @@
     <type name="M2E\M2ECloudMagentoConnector\Model\ModuleInfoProvider">
         <arguments>
             <argument name="extensionList" xsi:type="array">
-                <item name="m2e_shein" xsi:type="object">\M2E\Shein\Model\Extension</item>
+                <item name="m2e_shein" xsi:type="object">M2E\Shein\Model\Extension</item>
             </argument>
         </arguments>
     </type>
